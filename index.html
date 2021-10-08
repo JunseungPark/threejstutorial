@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <canvas id="c"></canvas>
+</body>
+
+</html>
+
+<script type="module">
+    import * as THREE from 'https://threejsfundamentals.org/threejs/resources/threejs/r132/build/three.module.js';
+    
+    function main() {
+        const canvas = document.querySelector('#c');
+        const renderer = new THREE.WebGLRenderer({canvas});
+
+        // 카메라 객체생성
+        const fov = 75; //field of view(시야각)의 줄임말입니다
+        const aspect = 2;  // the canvas default canvas의 가로 세로 비율입니다.
+        const near = 0.1;
+        const far = 5;
+        const camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
+        camera.position.z = 2;
+
+        const scene = new THREE.Scene();
+
+        // 정육면체 물체의 형태
+        const boxWidth = 1;
+        const boxHeight = 1;
+        const boxDepth = 1;
+        const geometry = new THREE.BoxGeometry(boxWidth, boxHeight, boxDepth);
+
+        // 메터리얼 물체의 색, 밝기, 질감 등
+        const material = new THREE.MeshBasicMaterial({color: 0x44aa88});
+
+        // 정육면체 객체
+        const cube = new THREE.Mesh(geometry, material);
+        scene.add(cube);
+
+        function render(time) {
+            time *= 0.001;  // convert time to seconds
+
+            cube.rotation.x = time;
+            cube.rotation.y = time;
+
+            renderer.render(scene, camera);
+
+            requestAnimationFrame(render);
+        }
+        requestAnimationFrame(render);
+    }
+    console
+    main();
+</script>
+
